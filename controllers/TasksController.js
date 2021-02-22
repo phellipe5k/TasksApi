@@ -1,37 +1,18 @@
 const { Router } = require('express');
-const { getAll } = require('../models/Task');
+const { TaskService } = require('../services');
 
-
-const TasksController = Router();
+const TasksController = new Router();
 
 TasksController.get('/', async (req, res) => {
-
-  res.status(200).json(await getAll());
-});
-
-TasksController.get('/:id', async (req, res) => {
-  const { id } = req.params;
-
-  res.status(200).json({});
+  res.status(200).json(await TaskService.getAll());
 });
 
 TasksController.post('/', async (req, res) => {
-  const {  } = req.body;
+  const { name } = req.body;
 
-  res.status(200).json({});
-});
+  const task = await TaskService.create(name);
 
-TasksController.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const {  } = req.body;
-
-  res.status(200).json({});
-});
-
-TasksController.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-
-  res.status(200).json({});
+  res.status(200).json(task);
 });
 
 module.exports = TasksController;
